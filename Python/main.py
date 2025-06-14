@@ -92,16 +92,13 @@ def export_to_excel(summary_df, gdp_chart, inflation_chart, filename='IMF_analys
     ws = wb.active
     ws.title = "Economic Indicators"
     
-    # Write summary table headers
     for col_num, header in enumerate(summary_df.columns, 1):
         ws.cell(row=1, column=col_num, value=header).font = Font(bold=True)
     
-    # Write summary data
     for row_num, row in enumerate(summary_df.values, 2):
         for col_num, value in enumerate(row, 1):
             ws.cell(row=row_num, column=col_num, value=value)
     
-    # Add GDP chart
     gdp_buffer = io.BytesIO()
     gdp_chart.savefig(gdp_buffer, format='png', dpi=100, bbox_inches='tight')
     gdp_buffer.seek(0)
@@ -109,7 +106,6 @@ def export_to_excel(summary_df, gdp_chart, inflation_chart, filename='IMF_analys
     img_gdp.width, img_gdp.height = 600, 400
     ws.add_image(img_gdp, 'A' + str(len(summary_df) + 3))
     
-    # Add Inflation chart
     infl_buffer = io.BytesIO()
     inflation_chart.savefig(infl_buffer, format='png', dpi=100, bbox_inches='tight')
     infl_buffer.seek(0)
@@ -117,7 +113,6 @@ def export_to_excel(summary_df, gdp_chart, inflation_chart, filename='IMF_analys
     img_infl.width, img_infl.height = 600, 400
     ws.add_image(img_infl, 'A' + str(len(summary_df) + 25))
     
-    # Adjust column widths
     for col in ws.columns:
         max_length = max(len(str(cell.value)) for cell in col)
         ws.column_dimensions[col[0].column_letter].width = max_length + 2
@@ -125,5 +120,4 @@ def export_to_excel(summary_df, gdp_chart, inflation_chart, filename='IMF_analys
     wb.save(filename)
     print(f"Exported to {filename}")
 
-# Export to Excel
 export_to_excel(summary, gdp_chart, inflation_chart)
