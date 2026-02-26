@@ -1,4 +1,4 @@
-# IMF Python and Power BI Assessment
+# IMF Python and Power BI and Tableau Project
 
 ## Project Overview
 This project provides automated access to IMF economic data with analysis and visualization capabilities.
